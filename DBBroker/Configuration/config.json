@@ -1,0 +1,5 @@
+{
+  "DataSource": "(localdb)\\MSSQLLocalDB",
+  "InitialCatalog": "ObracunZaradaDB1",
+  "IntegratedSecurity": true
+}

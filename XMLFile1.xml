@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<p>razdvoji response i handle request
+stavi isSuccessful da bude true po default
+u communication kod klijenta napravi getresponse funkciju
+popravi da ne moze da se loguje sa istim nalogom 2 puta
+dodaj u server odjavljenklijent event
+thread safe singleton</p>

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/" />
+  <Project Path="Common/Common.csproj" />
+  <Project Path="DBBroker/DBBroker.csproj" Id="40ce5a44-8f08-4def-b166-493dcdcf9703" />
+  <Project Path="FrmMain/Client.csproj" Id="2b433870-6aed-49cd-a11a-9cb8ffe81a9b" />
+  <Project Path="Server/Server.csproj" Id="5350f929-f9b6-4c93-a23a-8c9490742be9" />
+  <Project Path="SystemOperations/SystemOperations.csproj" Id="8d63873c-aa0a-4967-bdac-da9afd292392" />
+</Solution>
