@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Configuration;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 
@@ -17,7 +18,9 @@ namespace Server
 
         public void Start()
         {
-            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
+            string ip = ConfigurationManager.AppSettings["IPAdresa"] ?? "127.0.0.1";
+            int port = int.Parse(ConfigurationManager.AppSettings["Port"] ?? "9999");
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
 
             socket.Bind(endPoint);
             socket.Listen(5);

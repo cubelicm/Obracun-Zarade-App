@@ -1,5 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-
+using System.Configuration;
 namespace DBBroker
 {
     internal class DbConnection
@@ -9,12 +9,18 @@ namespace DBBroker
 
         public DbConnection()
         {
-            connection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ObracunZaradaDB1;Integrated Security=True;");
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings["MojaBaza"];
+
+            if (connectionStringSettings==null|| string.IsNullOrWhiteSpace(connectionStringSettings.ConnectionString))
+            {
+                throw new Exception("Konekcioni string nije definisan u App.config fajlu.\nMolimo unesite konekcioni string u podesavanjima za bazu");
+            }
+            connection = new SqlConnection(connectionStringSettings.ConnectionString);
         }
 
         public void OpenConnection()
         {
-            connection?.Open();
+            connection.Open();
         }
 
         public void CloseConnection()
