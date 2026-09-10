@@ -13,7 +13,11 @@ namespace Server
         private Socket client;
         private readonly List<ClientHandler> clients;
         private readonly Server server;
+        public Racunovodja UlogovaniRacunovodja { get; private set; }
+        public DateTime VremePovezivanja { get; private set; }
+        public DateTime? VremeLogovanja { get; private set; }
 
+        public Action KlijentAzuriran;
         private JSONNetworkSerializer serializer;
 
         bool isEnd = false;
@@ -22,6 +26,8 @@ namespace Server
             this.client = client;
             this.clients = clients;
             serializer = new JSONNetworkSerializer(client);
+
+            VremePovezivanja = DateTime.Now;
         }
 
         public void Handle()
@@ -48,6 +54,7 @@ namespace Server
             finally
             {
                 clients.Remove(this);
+                KlijentAzuriran?.Invoke();
                 serializer.Close();
             }
         }
@@ -62,9 +69,13 @@ namespace Server
                 {
                     case Operation.Login:
                         response.Object = Controller.Instance.PrijaviRacunovodju(serializer.ReadType<Racunovodja>(request.Object));
+                        
                         if (response.Object != null)
                         {
                             response.isSuccessful = true;
+                            UlogovaniRacunovodja = (Racunovodja)response.Object;
+                            VremeLogovanja = DateTime.Now;
+                            KlijentAzuriran?.Invoke();
                         }
                         else
                         {

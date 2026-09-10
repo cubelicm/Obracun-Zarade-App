@@ -8,7 +8,8 @@ namespace Server
     {
         private Socket socket;
         private List<ClientHandler> clients = new List<ClientHandler>();
-
+        public event Action PromenaNaServeru;
+        public List<ClientHandler> Clients => clients;
         public Server()
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -34,7 +35,9 @@ namespace Server
                 {
                     Socket clientSocket = socket.Accept();
                     ClientHandler handler = new ClientHandler(clientSocket, clients);
+                    handler.KlijentAzuriran = () => PromenaNaServeru?.Invoke();
                     clients.Add(handler);
+                    PromenaNaServeru?.Invoke();
                     Thread threadClient = new Thread(handler.Handle);
                     threadClient.IsBackground = true;
                     threadClient.Start();
